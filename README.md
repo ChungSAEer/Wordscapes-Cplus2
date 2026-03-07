@@ -2,8 +2,7 @@
 
 ## Tổng quan dự án
 
-Đây là dự án phát triển một **game giải đố dạng Wordscapes** bằng **C++ và thư viện SDL2**.
-Người chơi nối các chữ cái để tạo thành từ và điền vào **bảng ô chữ (crossword grid)**.
+Đây là dự án phát triển một **game giải đố dạng Wordscapes** bằng **C++ và thư viện SDL2**. Người chơi nối các chữ cái để tạo thành từ và điền vào **bảng ô chữ (crossword grid)**.
 
 **Số lượng thành viên:** 3 người
 **Thời gian dự kiến:** 4–6 tuần
@@ -41,29 +40,24 @@ Người chơi nối các chữ cái để tạo thành từ và điền vào **
 
 # Cấu trúc thư mục project
 
-```id="0q48d2"
+```
 /src
     main.cpp
-
 /core
     Game.cpp
     Input.cpp
     TextureManager.cpp
-
 /puzzle
     Grid.cpp
     LetterWheel.cpp
     Level.cpp
     WordValidator.cpp
-
 /ui
     Button.cpp
     Menu.cpp
     HUD.cpp
-
 /data
     LevelLoader.cpp
-
 /assets
     images
     fonts
@@ -93,7 +87,7 @@ Tạo nền tảng engine để game có thể chạy.
 
 ### Game Loop
 
-```cpp id="h7slrb"
+```cpp
 while (running)
 {
     handleInput();
@@ -118,23 +112,19 @@ Game có thể:
 
 Người chơi có thể **kéo các chữ để tạo thành từ**.
 
----
-
 ## Letter Wheel
 
 Hiển thị các chữ cái dạng vòng tròn:
 
-```id="n3k1sw"
+```
    A
-
 T     E
-
    O
 ```
 
 Struct chữ cái:
 
-```cpp id="0ru3xv"
+```cpp
 struct Letter
 {
     char value;
@@ -142,13 +132,11 @@ struct Letter
 };
 ```
 
----
-
 ## Drag System
 
 Logic:
 
-```id="gl11ns"
+```
 mouse_down(letter)
 bắt đầu tạo từ
 
@@ -161,17 +149,15 @@ submit từ
 
 Ví dụ:
 
-```id="ckr3ey"
+```
 A → T → E
 ```
 
 Tạo từ:
 
-```id="db23ea"
+```
 ATE
 ```
-
----
 
 ### Milestone
 
@@ -188,15 +174,13 @@ Prototype hoạt động:
 
 Điền từ vào **bảng ô chữ**.
 
----
-
 ## Grid System
 
 Grid lưu dạng **ma trận 2 chiều**.
 
 Ví dụ:
 
-```id="6rjgmq"
+```
 _ T _
 A T E
 _ E _
@@ -204,7 +188,7 @@ _ E _
 
 Struct ô chữ:
 
-```cpp id="5uxqyt"
+```cpp
 struct Cell
 {
     char letter;
@@ -212,19 +196,17 @@ struct Cell
 };
 ```
 
----
-
 ## Level Loader
 
 Level được lưu trong file:
 
-```id="u5nqbv"
+```
 levels.json
 ```
 
 Ví dụ:
 
-```json id="3ssunf"
+```json
 {
  "letters":["A","T","E"],
  "answers":[
@@ -235,13 +217,11 @@ Ví dụ:
 }
 ```
 
----
-
 ## Kiểm tra từ
 
 Logic:
 
-```id="dkwxmc"
+```
 if word nằm trong đáp án
     điền vào grid
 else if word có trong dictionary
@@ -249,8 +229,6 @@ else if word có trong dictionary
 else
     từ sai
 ```
-
----
 
 ### Milestone
 
@@ -268,53 +246,45 @@ Game có thể:
 
 Game có menu và nhiều level.
 
----
-
 ## Menu System
 
 Menu gồm:
 
-```id="28s0k3"
+```
 Start
 Exit
 ```
 
 State của game:
 
-```id="pfypp0"
+```
 MENU
 PLAYING
 LEVEL_COMPLETE
 ```
 
----
-
 ## Level Progression
 
 Logic:
 
-```id="yzfllh"
+```
 giải xong puzzle
 → sang level tiếp theo
 ```
-
----
 
 ## Shuffle Letters
 
 Button:
 
-```id="gt7b43"
+```
 Shuffle
 ```
 
 Ví dụ:
 
-```id="znb2ci"
+```
 A T E → T E A
 ```
-
----
 
 ## Hint System
 
@@ -322,11 +292,9 @@ Gợi ý 1 chữ.
 
 Ví dụ:
 
-```id="3x8j03"
+```
 _ A _
 ```
-
----
 
 ### Milestone
 
@@ -344,44 +312,36 @@ Game chơi được với:
 
 Cải thiện trải nghiệm game.
 
----
-
 ## Animation
 
 * highlight chữ
 * animation khi đúng từ
 * animation khi điền grid
 
----
-
 ## Sound
 
 Thêm âm thanh:
 
-```id="m7d56i"
+```
 click
 correct word
 level complete
 ```
 
----
-
 ## Score / Coin
 
 Ví dụ:
 
-```id="t4w1oh"
+```
 đúng từ → +coin
 dùng hint → -coin
 ```
-
----
 
 ## Tạo nội dung
 
 Tạo khoảng:
 
-```id="aig3c1"
+```
 50 level
 ```
 
@@ -391,30 +351,20 @@ Tạo khoảng:
 
 ## Dev 1 – Engine
 
-Làm:
-
 * setup SDL
 * game loop
 * renderer
 * input system
 * state machine
 
----
-
 ## Dev 2 – Gameplay
-
-Làm:
 
 * letter wheel
 * drag system
 * word builder
 * shuffle
 
----
-
 ## Dev 3 – Puzzle + UI
-
-Làm:
 
 * crossword grid
 * level loader
@@ -450,6 +400,6 @@ Game hoàn chỉnh có:
 
 Thời gian chơi:
 
-```id="9jzoj9"
+```
 30 – 60 phút
 ```
