@@ -32,7 +32,7 @@ Người chơi nối các chữ cái để tạo thành từ và điền vào **
 | Thành phần      | Công nghệ            |
 | --------------- | -------------------- |
 | Ngôn ngữ        | C++                  |
-| Thư viện đồ họa | SDL2                 |
+| Thư viện đồ họa | SDL3                 |
 | Load ảnh        | SDL_image            |
 | Hiển thị chữ    | SDL_ttf              |
 | Âm thanh        | SDL_mixer (optional) |
