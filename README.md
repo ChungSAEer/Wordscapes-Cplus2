@@ -2,7 +2,7 @@
 
 ## Tổng quan dự án
 
-Đây là dự án phát triển một **game giải đố dạng Wordscapes** bằng **C++ và thư viện SDL2**. Người chơi nối các chữ cái để tạo thành từ và điền vào **bảng ô chữ (crossword grid)**.
+Đây là dự án phát triển một **game giải đố dạng Wordscapes** bằng **C++ và thư viện SDL3**. Người chơi nối các chữ cái để tạo thành từ và điền vào **bảng ô chữ (crossword grid)**.
 
 **Số lượng thành viên:** 3 người
 **Thời gian dự kiến:** 4–6 tuần
