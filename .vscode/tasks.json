@@ -1,0 +1,25 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "shell",
+      "label": "Build Wordscapes",
+      "command": "C:\\msys64\\ucrt64\\bin\\g++.exe",
+      "args": [
+        "-fdiagnostics-color=always",
+        "-g",
+        "-std=c++17",
+        "src/main.cpp",
+        "core/Game.cpp",
+        "-o", "game.exe",
+        "-IC:/SDL3/include",
+        "-LC:/SDL3/lib",
+        "-lSDL3",
+        "-lSDL3_ttf"
+      ],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": ["$gcc"],
+      "group": { "kind": "build", "isDefault": true }
+    }
+  ]
+}
