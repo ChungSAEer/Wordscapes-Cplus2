@@ -1,15 +1,13 @@
 #include "../core/Game.h"
-#include <iostream>
 
 int main(int argc, char* argv[]) {
-    Game game;
+    Game troChoi;
 
-    if (!game.init("Wordscapes Clone", 800, 600)) {
-        std::cerr << "[ERROR] Khong the khoi tao game!\n";
+    if (!troChoi.khoiDong("Wordscapes - Tro Choi Ghep Chu", 800, 650)) {
         return 1;
     }
 
-    game.run();
+    troChoi.chay();
 
     return 0;
 }

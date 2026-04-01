@@ -3,48 +3,64 @@
 #include <SDL3/SDL_ttf.h>
 #include <string>
 
-// Các trạng thái của game
-enum class GameState {
-    MENU,
-    PLAYING,
-    LEVEL_COMPLETE,
-    EXIT
+#include "../data/LevelLoader.h"
+#include "../puzzle/Grid.h"
+#include "../puzzle/LetterWheel.h"
+#include "../puzzle/Level.h"
+#include "../puzzle/WordValidator.h"
+#include "../ui/Button.h"
+#include "../ui/Menu.h"
+#include "../ui/HUD.h"
+#include "Input.h"
+
+enum TrangThaiGame {
+    TRANG_THAI_MENU,
+    TRANG_THAI_CHOI,
+    TRANG_THAI_THANG
 };
 
 class Game {
 public:
     Game();
     ~Game();
-
-    // Khởi tạo SDL, tạo cửa sổ và renderer
-    bool init(const std::string& title, int width, int height);
-
-    // Game loop chính
-    void run();
-
-    // Dọn dẹp tài nguyên
-    void clean();
-
-    bool isRunning() const { return m_running; }
+    bool khoiDong(const std::string& tieuDe, int chieuRong, int chieuCao);
+    void chay();
+    void donDep();
 
 private:
-    // --- Game Loop ---
-    void handleEvents();
-    void update();
-    void render();
+    void xuLySuKien();
+    void capNhat();
+    void hienThi();
 
-    // --- Render helpers ---
-    void renderMenu();
-    void renderPlaying();
-    void renderText(const std::string& text, int x, int y, SDL_Color color);
+    void batDauLevel(int soLevel);
+    void kiemTraTu();
 
-    SDL_Window*   m_window   = nullptr;
-    SDL_Renderer* m_renderer = nullptr;
-    TTF_Font*     m_font     = nullptr;
+    SDL_Window* cuaSo;
+    SDL_Renderer* boVe;
+    TTF_Font* fontChu;
+    TTF_Font* fontLon;
+    TTF_Font* fontNho;
 
-    bool      m_running = false;
-    GameState m_state   = GameState::MENU;
+    bool dangChay;
+    TrangThaiGame trangThai;
 
-    int m_windowWidth  = 0;
-    int m_windowHeight = 0;
+    int levelHienTai;
+    int soXu;
+
+    LevelLoader boDocLevel;
+    Grid bangOChu;
+    LetterWheel vongChuCai;
+    Level levelData;
+    WordValidator kiemTraTuObj;
+    Menu menuChinh;
+    HUD thanhThongTin;
+    Input boXuLyInput;
+
+    int chieuRongCuaSo;
+    int chieuCaoCuaSo;
+
+    std::string thongBao;
+    float thoiGianThongBao;
+
+    Button nutTiepTheo;
 };

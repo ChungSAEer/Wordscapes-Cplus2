@@ -11,13 +11,28 @@
         "-std=c++17",
         "src/main.cpp",
         "core/Game.cpp",
+        "core/Input.cpp",
+        "core/TextureManager.cpp",
+        "puzzle/Grid.cpp",
+        "puzzle/LetterWheel.cpp",
+        "puzzle/Level.cpp",
+        "puzzle/WordValidator.cpp",
+        "ui/Button.cpp",
+        "ui/Menu.cpp",
+        "ui/HUD.cpp",
+        "data/LevelLoader.cpp",
         "-o", "game.exe",
         "-IC:/SDL3/include",
         "-LC:/SDL3/lib",
         "-lSDL3",
         "-lSDL3_ttf"
       ],
-      "options": { "cwd": "${workspaceFolder}" },
+      "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "PATH": "C:\\msys64\\ucrt64\\bin;${env:PATH}"
+        }
+      },
       "problemMatcher": ["$gcc"],
       "group": { "kind": "build", "isDefault": true }
     }

@@ -1,239 +1,289 @@
 #include "Game.h"
+#include "TextureManager.h"
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
+#include <algorithm>
 
-// ============================================================
-// Constructor / Destructor
-// ============================================================
-
-Game::Game() {}
-
-Game::~Game() {
-    clean();
+Game::Game() {
+    cuaSo = nullptr;
+    boVe = nullptr;
+    fontChu = nullptr;
+    fontLon = nullptr;
+    fontNho = nullptr;
+    dangChay = false;
+    trangThai = TRANG_THAI_MENU;
+    levelHienTai = 0;
+    soXu = 100;
+    chieuRongCuaSo = 0;
+    chieuCaoCuaSo = 0;
+    thoiGianThongBao = 0;
 }
 
-// ============================================================
-// init() – Khởi tạo SDL, tạo cửa sổ, renderer, font
-// ============================================================
+Game::~Game() {
+    donDep();
+}
 
-bool Game::init(const std::string& title, int width, int height) {
-    m_windowWidth  = width;
-    m_windowHeight = height;
+bool Game::khoiDong(const std::string& tieuDe, int chieuRong, int chieuCao) {
+    srand((unsigned)time(nullptr));
+    chieuRongCuaSo = chieuRong;
+    chieuCaoCuaSo = chieuCao;
 
-    // --- Khởi tạo SDL ---
     if (!SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS)) {
-        std::cerr << "[ERROR] SDL_Init failed: " << SDL_GetError() << "\n";
+        std::cerr << "SDL loi: " << SDL_GetError() << "\n";
         return false;
     }
 
-    // --- Khởi tạo SDL_ttf ---
     if (!TTF_Init()) {
-        std::cerr << "[ERROR] TTF_Init failed: " << SDL_GetError() << "\n";
+        std::cerr << "TTF loi: " << SDL_GetError() << "\n";
         return false;
     }
 
-    // --- Tạo cửa sổ ---
-    m_window = SDL_CreateWindow(title.c_str(), width, height, 0);
-    if (!m_window) {
-        std::cerr << "[ERROR] SDL_CreateWindow failed: " << SDL_GetError() << "\n";
-        return false;
-    }
+    cuaSo = SDL_CreateWindow(tieuDe.c_str(), chieuRong, chieuCao, 0);
+    if (!cuaSo) return false;
 
-    // --- Tạo renderer (dùng GPU acceleration nếu có) ---
-    m_renderer = SDL_CreateRenderer(m_window, nullptr);
-    if (!m_renderer) {
-        std::cerr << "[ERROR] SDL_CreateRenderer failed: " << SDL_GetError() << "\n";
-        return false;
-    }
+    boVe = SDL_CreateRenderer(cuaSo, nullptr);
+    if (!boVe) return false;
 
-    // --- Load font ---
-    // Dùng font mặc định của Windows, bạn có thể thay bằng font .ttf của riêng bạn
-    // Đặt file .ttf vào thư mục assets/fonts/ và đổi đường dẫn bên dưới
-    m_font = TTF_OpenFont("assets/fonts/font.ttf", 28);
-    if (!m_font) {
-        // Nếu chưa có font riêng, dùng font hệ thống Windows làm fallback
-        m_font = TTF_OpenFont("C:/Windows/Fonts/arial.ttf", 28);
-        if (!m_font) {
-            std::cerr << "[WARNING] Không load được font. Text sẽ không hiển thị.\n";
-            // Vẫn cho chạy tiếp, chỉ không có text
-        }
-    }
+    SDL_SetRenderDrawBlendMode(boVe, SDL_BLENDMODE_BLEND);
 
-    m_running = true;
-    m_state   = GameState::MENU;
+    fontChu = TTF_OpenFont("assets/fonts/font.ttf", 24);
+    if (!fontChu) fontChu = TTF_OpenFont("C:/Windows/Fonts/arial.ttf", 24);
 
-    std::cout << "[OK] Game initialized successfully!\n";
+    fontLon = TTF_OpenFont("assets/fonts/font.ttf", 48);
+    if (!fontLon) fontLon = TTF_OpenFont("C:/Windows/Fonts/arial.ttf", 48);
+
+    fontNho = TTF_OpenFont("assets/fonts/font.ttf", 18);
+    if (!fontNho) fontNho = TTF_OpenFont("C:/Windows/Fonts/arial.ttf", 18);
+
+    boDocLevel.docDuLieu();
+    menuChinh.khoiTao(chieuRong, chieuCao);
+    thanhThongTin.khoiTao(chieuRong, chieuCao);
+
+    nutTiepTheo.khoiTao(chieuRong / 2.0f - 80, chieuCao / 2.0f + 60, 160, 50,
+                        "NEXT LEVEL", { 46, 204, 113, 255 }, { 255, 255, 255, 255 });
+
+    dangChay = true;
+    trangThai = TRANG_THAI_MENU;
     return true;
 }
 
-// ============================================================
-// run() – Game loop chính
-// ============================================================
+void Game::batDauLevel(int soLevel) {
+    if (soLevel >= boDocLevel.tongSoLevel()) {
+        trangThai = TRANG_THAI_MENU;
+        return;
+    }
 
-void Game::run() {
-    while (m_running) {
-        handleEvents();
-        update();
-        render();
+    levelHienTai = soLevel;
+    ThongTinLevel thongTin = boDocLevel.layLevel(soLevel);
+    levelData.khoiTao(thongTin);
+
+    std::vector<std::string> dapAnList;
+    for (auto& vt : thongTin.viTriCacTu)
+        dapAnList.push_back(vt.tu);
+    kiemTraTuObj.khoiTao(dapAnList);
+
+    bangOChu.khoiTao(thongTin.soDong, thongTin.soCot, thongTin.viTriCacTu);
+
+    float tamVongX = chieuRongCuaSo / 2.0f;
+    float tamVongY = chieuCaoCuaSo - 160.0f;
+    float banKinh = 80.0f;
+    if (thongTin.cacChuCai.size() >= 4) banKinh = 90.0f;
+
+    vongChuCai.khoiTao(thongTin.cacChuCai, tamVongX, tamVongY, banKinh);
+
+    trangThai = TRANG_THAI_CHOI;
+    thongBao = "";
+    thoiGianThongBao = 0;
+}
+
+void Game::kiemTraTu() {
+    std::string tuTao = vongChuCai.layTuDangGhep();
+    if (tuTao.empty()) return;
+
+    if (kiemTraTuObj.daTuNayRoi(tuTao)) {
+        thongBao = "Da tim roi!";
+        thoiGianThongBao = 1.5f;
+    } else if (kiemTraTuObj.laDapAnDung(tuTao)) {
+        kiemTraTuObj.danhDauDaTim(tuTao);
+        levelData.themTuDaTim(tuTao);
+
+        ThongTinLevel tt = levelData.layThongTin();
+        bangOChu.dienTuVao(tuTao, tt.viTriCacTu);
+
+        soXu += 10;
+        thongBao = "+" + std::to_string(10) + " xu!";
+        thoiGianThongBao = 1.5f;
+
+        if (levelData.daHoanThanh()) {
+            trangThai = TRANG_THAI_THANG;
+            soXu += 50;
+        }
+    } else {
+        if (tuTao.size() >= 2) {
+            thongBao = "Sai roi!";
+            thoiGianThongBao = 1.0f;
+        }
+    }
+    vongChuCai.xoaTuDangGhep();
+}
+
+void Game::chay() {
+    Uint64 thoiGianTruoc = SDL_GetTicks();
+
+    while (dangChay) {
+        Uint64 thoiGianHienTai = SDL_GetTicks();
+        float dt = (thoiGianHienTai - thoiGianTruoc) / 1000.0f;
+        thoiGianTruoc = thoiGianHienTai;
+        if (dt > 0.05f) dt = 0.05f;
+
+        boXuLyInput.resetKhung();
+        xuLySuKien();
+        capNhat();
+        hienThi();
+
+        SDL_Delay(16);
     }
 }
 
-// ============================================================
-// handleEvents() – Xử lý input
-// ============================================================
+void Game::xuLySuKien() {
+    SDL_Event suKien;
+    while (SDL_PollEvent(&suKien)) {
+        if (suKien.type == SDL_EVENT_QUIT) {
+            dangChay = false;
+            return;
+        }
+        if (suKien.type == SDL_EVENT_KEY_DOWN && suKien.key.key == SDLK_ESCAPE) {
+            if (trangThai == TRANG_THAI_CHOI)
+                trangThai = TRANG_THAI_MENU;
+            else
+                dangChay = false;
+        }
+        boXuLyInput.xuLySuKien(suKien);
+    }
+}
 
-void Game::handleEvents() {
-    SDL_Event event;
+void Game::capNhat() {
+    ConChuot chuot = boXuLyInput.layChuot();
 
-    while (SDL_PollEvent(&event)) {
-        switch (event.type) {
+    if (thoiGianThongBao > 0)
+        thoiGianThongBao -= 0.016f;
 
-        case SDL_EVENT_QUIT:
-            m_running = false;
-            break;
+    if (trangThai == TRANG_THAI_MENU) {
+        int ketQua = menuChinh.veVaXuLy(boVe, fontLon, fontChu,
+                                          chuot.viTriX, chuot.viTriY, chuot.vuaNhan);
+        if (ketQua == 1) batDauLevel(0);
+        if (ketQua == 2) dangChay = false;
+    }
 
-        case SDL_EVENT_KEY_DOWN:
-            // Nhấn ESC để thoát
-            if (event.key.key == SDLK_ESCAPE) {
-                m_running = false;
+    if (trangThai == TRANG_THAI_CHOI) {
+        vongChuCai.xuLyChuot(chuot.viTriX, chuot.viTriY,
+                              chuot.vuaNhan, chuot.vuaNha, chuot.dangNhan);
+
+        if (chuot.vuaNha && vongChuCai.layTuDangGhep().size() > 0) {
+            kiemTraTu();
+        }
+
+        if (chuot.vuaNhan) {
+            if (thanhThongTin.nutTronBam(chuot.viTriX, chuot.viTriY, true)) {
+                vongChuCai.tronChu();
             }
-            // Nhấn SPACE ở MENU để vào game (test)
-            if (event.key.key == SDLK_SPACE && m_state == GameState::MENU) {
-                m_state = GameState::PLAYING;
-                std::cout << "[INPUT] Chuyển sang PLAYING\n";
+            if (thanhThongTin.nutGoiYBam(chuot.viTriX, chuot.viTriY, true)) {
+                if (soXu >= 20) {
+                    std::string tuGoiY = levelData.goiY();
+                    if (!tuGoiY.empty()) {
+                        soXu -= 20;
+                        ThongTinLevel tt = levelData.layThongTin();
+                        bangOChu.loMotChu(tuGoiY, tt.viTriCacTu);
+                        thongBao = "Goi y: -20 xu";
+                        thoiGianThongBao = 1.5f;
+                    }
+                } else {
+                    thongBao = "Het xu!";
+                    thoiGianThongBao = 1.5f;
+                }
             }
-            break;
+        }
 
-        case SDL_EVENT_MOUSE_BUTTON_DOWN:
-            std::cout << "[INPUT] Mouse down tại ("
-                      << event.button.x << ", " << event.button.y << ")\n";
-            break;
+        bangOChu.capNhat(0.016f);
+    }
 
-        case SDL_EVENT_MOUSE_BUTTON_UP:
-            std::cout << "[INPUT] Mouse up tại ("
-                      << event.button.x << ", " << event.button.y << ")\n";
-            break;
-
-        case SDL_EVENT_MOUSE_MOTION:
-            // Uncomment dòng dưới nếu muốn log mọi chuyển động chuột
-            // std::cout << "[INPUT] Mouse move: (" << event.motion.x << ", " << event.motion.y << ")\n";
-            break;
-
-        default:
-            break;
+    if (trangThai == TRANG_THAI_THANG) {
+        nutTiepTheo.laHover(chuot.viTriX, chuot.viTriY);
+        if (chuot.vuaNhan && nutTiepTheo.duocNhan(chuot.viTriX, chuot.viTriY, true)) {
+            batDauLevel(levelHienTai + 1);
         }
     }
 }
 
-// ============================================================
-// update() – Cập nhật logic game
-// ============================================================
+void Game::hienThi() {
+    SDL_SetRenderDrawColor(boVe, 15, 15, 40, 255);
+    SDL_RenderClear(boVe);
 
-void Game::update() {
-    // Phase 1: chưa có logic gameplay, để trống
-    // Phase 2 trở đi sẽ cập nhật LetterWheel, WordBuilder, v.v.
-}
-
-// ============================================================
-// render() – Vẽ lên màn hình
-// ============================================================
-
-void Game::render() {
-    // Xóa màn hình
-    SDL_SetRenderDrawColor(m_renderer, 30, 30, 50, 255); // màu nền tối
-    SDL_RenderClear(m_renderer);
-
-    // Vẽ tùy theo trạng thái game
-    switch (m_state) {
-
-    case GameState::MENU:
-        renderMenu();
-        break;
-
-    case GameState::PLAYING:
-        renderPlaying();
-        break;
-
-    case GameState::LEVEL_COMPLETE:
-        renderText("Level Complete!", m_windowWidth / 2, m_windowHeight / 2, {255, 215, 0, 255});
-        break;
-
-    default:
-        break;
+    SDL_SetRenderDrawColor(boVe, 20, 20, 55, 100);
+    for (int i = 0; i < chieuCaoCuaSo; i += 4) {
+        SDL_FRect vach = { 0, (float)i, (float)chieuRongCuaSo, 2.0f };
+        SDL_RenderFillRect(boVe, &vach);
     }
 
-    // Hiển thị frame lên màn hình
-    SDL_RenderPresent(m_renderer);
+    if (trangThai == TRANG_THAI_MENU) {
+        menuChinh.veVaXuLy(boVe, fontLon, fontChu,
+                            boXuLyInput.layChuot().viTriX,
+                            boXuLyInput.layChuot().viTriY, false);
+    }
+
+    if (trangThai == TRANG_THAI_CHOI) {
+        int soDong = bangOChu.laySoDong();
+        int soCot = bangOChu.laySoCot();
+        float kichThuocO = 45.0f;
+        float khoangCach = 2.0f;
+        float tongRong = soCot * (kichThuocO + khoangCach);
+        float tongCao = soDong * (kichThuocO + khoangCach);
+        float batDauX = (chieuRongCuaSo - tongRong) / 2.0f;
+        float batDauY = 60.0f;
+
+        bangOChu.veLen(boVe, fontChu, batDauX, batDauY, kichThuocO);
+
+        std::string tuDangTao = vongChuCai.layTuDangGhep();
+        thanhThongTin.veLen(boVe, fontNho, levelHienTai + 1, soXu, tuDangTao);
+
+        vongChuCai.veLen(boVe, fontChu);
+
+        if (thoiGianThongBao > 0 && !thongBao.empty()) {
+            SDL_Color mauThongBao;
+            if (thongBao.find("+") != std::string::npos)
+                mauThongBao = { 46, 204, 113, 255 };
+            else if (thongBao.find("Sai") != std::string::npos)
+                mauThongBao = { 231, 76, 60, 255 };
+            else
+                mauThongBao = { 241, 196, 15, 255 };
+            TextureManager::veChu(boVe, fontChu, thongBao,
+                chieuRongCuaSo / 2.0f, chieuCaoCuaSo / 2.0f - 20, mauThongBao, true);
+        }
+    }
+
+    if (trangThai == TRANG_THAI_THANG) {
+        SDL_Color mauVang = { 255, 215, 0, 255 };
+        TextureManager::veChu(boVe, fontLon, "LEVEL COMPLETE!",
+            chieuRongCuaSo / 2.0f, chieuCaoCuaSo / 2.0f - 40, mauVang, true);
+
+        SDL_Color mauTrang = { 200, 200, 200, 255 };
+        std::string chuBonus = "+50 bonus xu!";
+        TextureManager::veChu(boVe, fontChu, chuBonus,
+            chieuRongCuaSo / 2.0f, chieuCaoCuaSo / 2.0f + 20, mauTrang, true);
+
+        nutTiepTheo.veLen(boVe, fontChu);
+    }
+
+    SDL_RenderPresent(boVe);
 }
 
-// ============================================================
-// renderMenu() – Vẽ màn hình menu
-// ============================================================
-
-void Game::renderMenu() {
-    renderText("WORDSCAPES",
-               m_windowWidth / 2, 180,
-               {100, 200, 255, 255}); // tiêu đề màu xanh
-
-    renderText("Nhan SPACE de bat dau",
-               m_windowWidth / 2, 300,
-               {200, 200, 200, 255}); // hướng dẫn màu xám
-
-    renderText("Nhan ESC de thoat",
-               m_windowWidth / 2, 350,
-               {150, 150, 150, 255});
-}
-
-// ============================================================
-// renderPlaying() – Vẽ màn hình gameplay (placeholder)
-// ============================================================
-
-void Game::renderPlaying() {
-    renderText("Dang choi...",
-               m_windowWidth / 2, m_windowHeight / 2,
-               {255, 255, 255, 255});
-
-    renderText("(Phase 2 se co Letter Wheel)",
-               m_windowWidth / 2, m_windowHeight / 2 + 60,
-               {150, 150, 150, 255});
-}
-
-// ============================================================
-// renderText() – Helper: vẽ text căn giữa tại (x, y)
-// ============================================================
-
-void Game::renderText(const std::string& text, int x, int y, SDL_Color color) {
-    if (!m_font) return;
-
-    SDL_Surface* surface = TTF_RenderText_Blended(m_font, text.c_str(), 0, color);
-    if (!surface) return;
-
-    SDL_Texture* texture = SDL_CreateTextureFromSurface(m_renderer, surface);
-    SDL_DestroySurface(surface);
-    if (!texture) return;
-
-    float w = 0, h = 0;
-    SDL_GetTextureSize(texture, &w, &h);
-
-    // Căn giữa theo x
-    SDL_FRect dst = {
-        (float)(x - w / 2),
-        (float)(y - h / 2),
-        w, h
-    };
-
-    SDL_RenderTexture(m_renderer, texture, nullptr, &dst);
-    SDL_DestroyTexture(texture);
-}
-
-// ============================================================
-// clean() – Dọn dẹp tài nguyên
-// ============================================================
-
-void Game::clean() {
-    if (m_font)     { TTF_CloseFont(m_font);          m_font     = nullptr; }
-    if (m_renderer) { SDL_DestroyRenderer(m_renderer); m_renderer = nullptr; }
-    if (m_window)   { SDL_DestroyWindow(m_window);     m_window   = nullptr; }
+void Game::donDep() {
+    if (fontNho) { TTF_CloseFont(fontNho); fontNho = nullptr; }
+    if (fontChu) { TTF_CloseFont(fontChu); fontChu = nullptr; }
+    if (fontLon) { TTF_CloseFont(fontLon); fontLon = nullptr; }
+    if (boVe) { SDL_DestroyRenderer(boVe); boVe = nullptr; }
+    if (cuaSo) { SDL_DestroyWindow(cuaSo); cuaSo = nullptr; }
     TTF_Quit();
     SDL_Quit();
-    std::cout << "[OK] Game cleaned up.\n";
 }
