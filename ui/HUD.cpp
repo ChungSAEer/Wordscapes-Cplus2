@@ -7,9 +7,9 @@ void HUD::khoiTao(int _chieuRong, int _chieuCao) {
     chieuCao = _chieuCao;
 
     nutTron.khoiTao(chieuRong / 2.0f - 250, chieuCao - 55, 100, 40,
-                    "XAO TRON", { 52, 152, 219, 255 }, { 255, 255, 255, 255 });
+                    "SUFFE", { 52, 152, 219, 255 }, { 255, 255, 255, 255 });
     nutGoiY.khoiTao(chieuRong / 2.0f + 150, chieuCao - 55, 100, 40,
-                    "GOI Y", { 155, 89, 182, 255 }, { 255, 255, 255, 255 });
+                    "HINT", { 155, 89, 182, 255 }, { 255, 255, 255, 255 });
 }
 
 void HUD::veLen(SDL_Renderer* ve, TTF_Font* font, int level, int xu, const std::string& tuHienTai) {

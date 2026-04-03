@@ -195,11 +195,11 @@ void Game::capNhat() {
                         soXu -= 20;
                         ThongTinLevel tt = levelData.layThongTin();
                         bangOChu.loMotChu(tuGoiY, tt.viTriCacTu);
-                        thongBao = "Goi y: -20 xu";
+                        thongBao = "Hint : -20 coins!";
                         thoiGianThongBao = 1.5f;
                     }
                 } else {
-                    thongBao = "Het xu!";
+                    thongBao = "Out of coins!";
                     thoiGianThongBao = 1.5f;
                 }
             }
@@ -268,7 +268,7 @@ void Game::hienThi() {
             chieuRongCuaSo / 2.0f, chieuCaoCuaSo / 2.0f - 40, mauVang, true);
 
         SDL_Color mauTrang = { 200, 200, 200, 255 };
-        std::string chuBonus = "+50 bonus xu!";
+        std::string chuBonus = "+50 bonus coins!";
         TextureManager::veChu(boVe, fontChu, chuBonus,
             chieuRongCuaSo / 2.0f, chieuCaoCuaSo / 2.0f + 20, mauTrang, true);
 
