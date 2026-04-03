@@ -3,7 +3,7 @@
 int main(int argc, char* argv[]) {
     Game troChoi;
 
-    if (!troChoi.khoiDong("Wordscapes - Tro Choi Ghep Chu", 800, 650)) {
+    if (!troChoi.khoiDong("Wordscapes - Tro Choi Ghep Chu", 900, 750)) {
         return 1;
     }
 

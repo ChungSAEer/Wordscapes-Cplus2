@@ -93,7 +93,7 @@ void Game::batDauLevel(int soLevel) {
     vongChuCai.khoiTao(thongTin.cacChuCai, tamVongX, tamVongY, banKinh);
 
     trangThai = TRANG_THAI_CHOI;
-    thongBao = "";
+    thongBao = "Xin chao";
     thoiGianThongBao = 0;
 }
 
@@ -102,7 +102,7 @@ void Game::kiemTraTu() {
     if (tuTao.empty()) return;
 
     if (kiemTraTuObj.daTuNayRoi(tuTao)) {
-        thongBao = "Da tim roi!";
+        thongBao = "Chu nay da tim roi!";
         thoiGianThongBao = 1.5f;
     } else if (kiemTraTuObj.laDapAnDung(tuTao)) {
         kiemTraTuObj.danhDauDaTim(tuTao);
