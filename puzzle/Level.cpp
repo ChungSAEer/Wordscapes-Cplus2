@@ -43,7 +43,18 @@ std::vector<std::string> Level::layDapAnChuaTim() {
 }
 
 std::string Level::goiY() {
-    for (auto& vt : duLieu.viTriCacTu)
-        if (!vt.daTim) return vt.tu;
-    return "";
+    std::vector<std::string> cacTuChuaTim = layDapAnChuaTim();
+    
+    if (cacTuChuaTim.empty()) {
+        return ""; // Đã tìm hết, không còn gì để gợi ý
+    }
+
+    // Chọn ngẫu nhiên 1 từ trong danh sách chưa tìm
+    int randomIndex = rand() % cacTuChuaTim.size();
+    std::string tuDuocGoiY = cacTuChuaTim[randomIndex];
+    
+    // Đánh dấu từ đó là đã tìm thấy
+    themTuDaTim(tuDuocGoiY);
+    
+    return tuDuocGoiY;
 }
