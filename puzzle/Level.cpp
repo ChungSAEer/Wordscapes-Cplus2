@@ -44,7 +44,6 @@ std::vector<std::string> Level::layDapAnChuaTim() {
 
 std::string Level::goiY() {
     std::vector<std::string> cacTuChuaTim = layDapAnChuaTim();
-
     if (cacTuChuaTim.empty()) {
         return ""; // Đã tìm hết, không còn gì để gợi ý
     }
