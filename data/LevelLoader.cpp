@@ -15,19 +15,19 @@ void LevelLoader::docDuLieu() {
     tatCaLevel.clear();
 
     themLevel("CAT", {"CAT", "ACT"}, 3, 3,
-        {{"ACT", 0, 0, true, false}, {"CAT", 0, 0, false, false}});
+        {{"ACT", 0, 0, true, false}, {"CAT", 0, 1, false, false}});
 
     themLevel("DOG", {"DOG", "GOD"}, 3, 3,
         {{"DOG", 1, 0, true, false}, {"GOD", 0, 1, false, false}});
 
-    themLevel("SUN", {"SUN", "NUS"}, 3, 3,
-        {{"SUN", 1, 0, true, false}, {"NUS", 0, 1, false, false}});
+    themLevel("SUN", {"SUN", "US"}, 3, 3,
+        {{"SUN", 1, 0, true, false}, {"US", 1, 1, false, false}});
 
     themLevel("TOP", {"TOP", "POT"}, 3, 3,
         {{"TOP", 1, 0, true, false}, {"POT", 0, 1, false, false}});
 
-    themLevel("RAT", {"RAT", "TAR", "ART"}, 4, 4,
-        {{"RAT", 2, 1, true, false}, {"TAR", 1, 2, false, false}, {"ART", 1, 1, false, false}});
+    themLevel("RAT", {"RAT", "TAR", "ART"}, 3, 4,
+        {{"RAT", 1, 0, true, false}, {"TAR", 0, 1, false, false}, {"ART", 2, 0, true, false}});
 
     themLevel("NET", {"NET", "TEN"}, 3, 3,
         {{"NET", 1, 0, true, false}, {"TEN", 0, 1, false, false}});
@@ -35,44 +35,44 @@ void LevelLoader::docDuLieu() {
     themLevel("PAN", {"PAN", "NAP"}, 3, 3,
         {{"PAN", 1, 0, true, false}, {"NAP", 0, 1, false, false}});
 
-    themLevel("GUN", {"GUN", "NUG"}, 3, 3,
-        {{"GUN", 1, 0, true, false}, {"NUG", 0, 1, false, false}});
+    themLevel("YOUNG", {"YOUNG", "GUN", "GUY", "YOU"}, 4, 5,
+        {{"YOUNG", 2, 0, true, false}, {"GUY", 0, 0, false, false}, {"YOU", 1, 1, false, false}, {"GUN", 1, 2, false, false}});
 
     themLevel("PIN", {"PIN", "NIP"}, 3, 3,
         {{"PIN", 1, 0, true, false}, {"NIP", 0, 1, false, false}});
 
     themLevel("CUP", {"CUP", "UP"}, 3, 3,
-        {{"CUP", 0, 0, true, false}, {"UP", 0, 1, false, false}});
+        {{"CUP", 1, 0, true, false}, {"UP", 1, 1, false, false}});
 
     themLevel("HATE", {"HATE", "EAT", "HAT"}, 4, 4,
-        {{"HATE", 2, 0, true, false}, {"EAT", 1, 1, false, false}, {"HAT", 0, 2, false, false}});
+        {{"HATE", 0, 0, true, false}, {"HAT", 0, 0, false, false}, {"EAT", 0, 3, false, false}});
 
-    themLevel("LATE", {"LATE", "ALE", "LET"}, 5, 4,
-        {{"LATE", 2, 0, true, false}, {"ALE", 2, 1, false, false}, {"LET", 0, 2, false, false}});
+    themLevel("LATE", {"LATE", "ATE", "LET"}, 4, 4,
+        {{"LATE", 1, 0, true, false}, {"ATE", 1, 1, false, false}, {"LET", 0, 3, false, false}});
 
     themLevel("RACE", {"RACE", "CAR", "ACE"}, 4, 4,
-        {{"RACE", 1, 0, true, false}, {"CAR", 1, 2, false, false}, {"ACE", 1, 1, false, false}});
+        {{"RACE", 1, 0, true, false}, {"ACE", 1, 1, false, false}, {"CAR", 1, 2, false, false}});
 
     themLevel("LIFE", {"LIFE", "LIE", "FILE"}, 5, 4,
-        {{"LIFE", 2, 0, true, false}, {"LIE", 2, 0, false, false}, {"FILE", 1, 1, false, false}});
+        {{"LIFE", 2, 0, true, false}, {"FILE", 1, 1, false, false}, {"LIE", 0, 3, false, false}});
 
     themLevel("TIME", {"TIME", "TIE", "MET"}, 5, 4,
-        {{"TIME", 2, 0, true, false}, {"TIE", 2, 0, false, false}, {"MET", 2, 2, false, false}});
+        {{"TIME", 0, 0, true, false}, {"TIE", 0, 0, false, false}, {"MET", 0, 2, false, false}});
 
-    themLevel("NOSE", {"NOSE", "ONE", "SON"}, 5, 4,
-        {{"NOSE", 2, 0, true, false}, {"ONE", 2, 1, false, false}, {"SON", 2, 2, false, false}});
+    themLevel("NOSE", {"NOSE", "ONE", "SON"}, 4, 4,
+        {{"NOSE", 0, 0, true, false}, {"ONE", 0, 1, false, false}, {"SON", 0, 2, false, false}});
 
-    themLevel("LOVE", {"LOVE", "OLE"}, 4, 4,
-        {{"LOVE", 1, 0, true, false}, {"OLE", 1, 1, false, false}});
+    themLevel("LOVE", {"LOVE", "LEO"}, 3, 4,
+        {{"LOVE", 0, 0, true, false}, {"LEO", 0, 0, false, false}});
 
     themLevel("NAME", {"NAME", "MAN", "MEN"}, 4, 4,
-        {{"NAME", 1, 0, true, false}, {"MAN", 0, 2, false, false}, {"MEN", 1, 2, false, false}});
+        {{"NAME", 1, 0, true, false}, {"MAN", 1, 2, false, false}, {"MEN", 0, 3, false, false}});
 
-    themLevel("GAME", {"GAME", "AGE", "GEM"}, 4, 4,
-        {{"GAME", 1, 0, true, false}, {"AGE", 0, 1, false, false}, {"GEM", 1, 1, false, false}});
+    themLevel("GAME", {"GAME", "AGE", "GEM"}, 5, 4,
+        {{"GAME", 2, 0, true, false}, {"AGE", 2, 1, false, false}, {"GEM", 0, 2, false, false}});
 
     themLevel("HOPE", {"HOPE", "HOP", "HOE"}, 4, 4,
-        {{"HOPE", 1, 0, true, false}, {"HOP", 0, 2, false, false}, {"HOE", 1, 0, false, false}});
+        {{"HOPE", 1, 0, true, false}, {"HOP", 1, 0, false, false}, {"HOE", 0, 1, false, false}});
 }
 
 ThongTinLevel LevelLoader::layLevel(int soThuTu) {
