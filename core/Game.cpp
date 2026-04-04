@@ -39,7 +39,7 @@ bool Game::khoiDong(const std::string& tieuDe, int chieuRong, int chieuCao) {
         return false;
     }
 
-    cuaSo = SDL_CreateWindow(tieuDe.c_str(), chieuRong, chieuCao, 0);
+    cuaSo = SDL_CreateWindow("Wordscapes - Updated", chieuRong, chieuCao, 0);
     if (!cuaSo) return false;
 
     boVe = SDL_CreateRenderer(cuaSo, nullptr);
