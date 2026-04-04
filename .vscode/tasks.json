@@ -4,7 +4,7 @@
     {
       "type": "shell",
       "label": "Build Wordscapes",
-      "command": "C:\\msys64\\ucrt64\\bin\\g++.exe",
+      "command": "C:\\Program Files\\CodeBlocks\\MinGW\\bin\\g++.exe",
       "args": [
         "-fdiagnostics-color=always",
         "-g",
@@ -22,15 +22,15 @@
         "ui/HUD.cpp",
         "data/LevelLoader.cpp",
         "-o", "game.exe",
-        "-IC:/SDL3/include",
-        "-LC:/SDL3/lib",
+        "-IC:/SDL_LIBRARIES/include",
+        "-LC:/SDL_LIBRARIES/lib",
         "-lSDL3",
         "-lSDL3_ttf"
       ],
       "options": {
         "cwd": "${workspaceFolder}",
         "env": {
-          "PATH": "C:\\msys64\\ucrt64\\bin;${env:PATH}"
+          "PATH": "C:\\Program Files\\CodeBlocks\\MinGW\\bin;${env:PATH}"
         }
       },
       "problemMatcher": ["$gcc"],

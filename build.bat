@@ -1,6 +1,6 @@
 @echo off
 cd /d "%~dp0"
-set PATH=C:\msys64\ucrt64\bin;%PATH%
+set PATH=C:\Program Files\CodeBlocks\MinGW\bin;%PATH%
 echo === BUILDING WORDSCAPES ===
 
 g++ -g -std=c++17 ^
@@ -17,8 +17,8 @@ g++ -g -std=c++17 ^
   ui\HUD.cpp ^
   data\LevelLoader.cpp ^
   -o game.exe ^
-  -IC:\SDL3\include ^
-  -LC:\SDL3\lib ^
+  -IC:\SDL_LIBRARIES\include ^
+  -LC:\SDL_LIBRARIES\lib ^
   -lSDL3 -lSDL3_ttf
 
 if %ERRORLEVEL% EQU 0 (

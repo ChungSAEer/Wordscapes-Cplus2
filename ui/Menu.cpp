@@ -1,44 +1,123 @@
 #include "Menu.h"
 #include "../core/TextureManager.h"
 #include <cmath>
+#include <cstdlib>
+
+static void veGradientDoc(SDL_Renderer* ve, int w, int h,
+                           SDL_Color mauTren, SDL_Color mauDuoi) {
+    for (int y = 0; y < h; y++) {
+        float t = (float)y / h;
+        Uint8 r = (Uint8)(mauTren.r + t * (mauDuoi.r - mauTren.r));
+        Uint8 g = (Uint8)(mauTren.g + t * (mauDuoi.g - mauTren.g));
+        Uint8 b = (Uint8)(mauTren.b + t * (mauDuoi.b - mauTren.b));
+        SDL_SetRenderDrawColor(ve, r, g, b, 255);
+        SDL_FRect dong = { 0, (float)y, (float)w, 1.0f };
+        SDL_RenderFillRect(ve, &dong);
+    }
+}
+
+static void veVongTron(SDL_Renderer* ve, float cx, float cy, float r, SDL_Color mau) {
+    SDL_SetRenderDrawColor(ve, mau.r, mau.g, mau.b, mau.a);
+    int ri = (int)r;
+    for (int dx = -ri; dx <= ri; dx++)
+        for (int dy = -ri; dy <= ri; dy++)
+            if (dx*dx + dy*dy <= ri*ri)
+                SDL_RenderPoint(ve, cx+dx, cy+dy);
+}
 
 void Menu::khoiTao(int _chieuRong, int _chieuCao) {
     chieuRong = _chieuRong;
-    chieuCao = _chieuCao;
-    bienDoNhay = 0;
+    chieuCao  = _chieuCao;
+    bienDoNhay   = 0;
     thoiGianDemo = 0;
 
-    float giuaX = chieuRong / 2.0f;
+    // Sinh các ngôi sao nền ngẫu nhiên
+    cacSao.clear();
+    for (int i = 0; i < 80; i++) {
+        MenuStar s;
+        s.x     = (float)(rand() % chieuRong);
+        s.y     = (float)(rand() % chieuCao);
+        s.r     = 0.5f + (rand() % 20) / 10.0f;      // bán kính 0.5..2.5
+        s.speed = 0.3f + (rand() % 15) / 10.0f;       // tốc độ nhấp nháy
+        s.alpha = (float)(rand() % 255);
+        cacSao.push_back(s);
+    }
 
-    nutChoi.khoiTao(giuaX - 100, chieuCao / 2.0f + 20, 200, 55,
-                    "PLAY", { 46, 204, 113, 255 }, { 255, 255, 255, 255 });
-    nutThoat.khoiTao(giuaX - 100, chieuCao / 2.0f + 95, 200, 55,
-                     "EXIT", { 231, 76, 60, 255 }, { 255, 255, 255, 255 });
+    float giuaX = chieuRong / 2.0f;
+    nutChoi.khoiTao(giuaX - 110, chieuCao / 2.0f + 30,  220, 58,
+                    "PLAY",  { 52, 211, 153, 255 }, { 255, 255, 255, 255 });
+    nutThoat.khoiTao(giuaX - 110, chieuCao / 2.0f + 108, 220, 58,
+                     "EXIT", { 239, 68,  68,  255 }, { 255, 255, 255, 255 });
 }
 
 int Menu::veVaXuLy(SDL_Renderer* ve, TTF_Font* fontLon, TTF_Font* fontNho,
                    float chuotX, float chuotY, bool nhanChuot) {
     thoiGianDemo += 0.016f;
-    bienDoNhay = sinf(thoiGianDemo * 2.0f) * 8.0f;
+    bienDoNhay = sinf(thoiGianDemo * 1.8f) * 9.0f;
 
-    float giuaX = chieuRong / 2.0f;
+    // --- Nền gradient: tím đen → xanh đen ---
+    SDL_Color nenTren  = { 10,  8,  35, 255 };
+    SDL_Color nenDuoi  = {  5, 20,  50, 255 };
+    veGradientDoc(ve, chieuRong, chieuCao, nenTren, nenDuoi);
 
-    SDL_Color mauVang = { 255, 215, 0, 255 };
+    // --- Lưới ô chữ mờ ở nền ---
+    SDL_SetRenderDrawColor(ve, 255, 255, 255, 10);
+    for (int x = 0; x < chieuRong; x += 42)
+        SDL_RenderLine(ve, x, 0, x, chieuCao);
+    for (int y = 0; y < chieuCao; y += 42)
+        SDL_RenderLine(ve, 0, y, chieuRong, y);
+
+    // --- Các ngôi sao nhấp nháy ---
+    for (auto& s : cacSao) {
+        s.alpha += s.speed * 4.0f;
+        Uint8 a = (Uint8)(128 + 127 * sinf(s.alpha * 0.02f));
+        SDL_Color mauSao = { 200, 220, 255, a };
+        veVongTron(ve, s.x, s.y, s.r, mauSao);
+    }
+
+    // --- Vầng hào quang phía sau tiêu đề ---
+    float glowY = chieuCao / 4.0f + bienDoNhay;
+    float pulse = 0.55f + 0.45f * sinf(thoiGianDemo * 2.5f);
+    SDL_SetRenderDrawColor(ve,
+        (Uint8)(80  * pulse),
+        (Uint8)(40  * pulse),
+        (Uint8)(180 * pulse), 35);
+    SDL_FRect haloRect = { chieuRong / 2.0f - 200, glowY - 55, 400, 90 };
+    for (int i = 0; i < 18; i++) {
+        haloRect.x += 3; haloRect.y += 2;
+        haloRect.w -= 6; haloRect.h -= 4;
+        SDL_RenderFillRect(ve, &haloRect);
+    }
+
+    // --- Tiêu đề "WORDSCAPES" với bóng + màu vàng rực ---
+    SDL_Color mauBong  = {  80,  40, 180, 160 };
+    SDL_Color mauTieuDe = { 255, 215,   0, 255 };
+    // Vẽ bóng lệch 3px
     TextureManager::veChu(ve, fontLon, "WORDSCAPES",
-                          giuaX, chieuCao / 4.0f + bienDoNhay, mauVang, true);
+                          chieuRong / 2.0f + 3, glowY + 3, mauBong, true);
+    // Vẽ tiêu đề chính
+    TextureManager::veChu(ve, fontLon, "WORDSCAPES",
+                          chieuRong / 2.0f, glowY, mauTieuDe, true);
 
-    SDL_Color mauXam = { 180, 185, 200, 255 };
-    TextureManager::veChu(ve, fontNho, "Word Puzzle Game",
-                          giuaX, chieuCao / 4.0f + 50, mauXam, true);
+    // --- Phụ đề ---
+    float subAlpha = 180 + (Uint8)(75 * sinf(thoiGianDemo * 1.2f));
+    SDL_Color mauPhuDe = { 160, 190, 255, (Uint8)subAlpha };
+    TextureManager::veChu(ve, fontNho, "A Word Puzzle Adventure",
+                          chieuRong / 2.0f, chieuCao / 4.0f + 58, mauPhuDe, true);
 
+    // --- Đường trang trí dưới phụ đề ---
+    float lineY = chieuCao / 4.0f + 76;
+    SDL_SetRenderDrawColor(ve, 100, 120, 255, 80);
+    SDL_RenderLine(ve, (int)(chieuRong/2.0f - 120), (int)lineY,
+                       (int)(chieuRong/2.0f + 120), (int)lineY);
+
+    // --- Nút PLAY / EXIT ---
     nutChoi.laHover(chuotX, chuotY);
     nutThoat.laHover(chuotX, chuotY);
-
     nutChoi.veLen(ve, fontNho);
     nutThoat.veLen(ve, fontNho);
 
-    if (nutChoi.duocNhan(chuotX, chuotY, nhanChuot)) return 1;
+    if (nutChoi.duocNhan(chuotX, chuotY, nhanChuot))  return 1;
     if (nutThoat.duocNhan(chuotX, chuotY, nhanChuot)) return 2;
-
     return 0;
 }

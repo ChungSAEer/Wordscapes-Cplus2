@@ -6,8 +6,8 @@ void HUD::khoiTao(int _chieuRong, int _chieuCao) {
     chieuRong = _chieuRong;
     chieuCao = _chieuCao;
 
-    nutTron.khoiTao(chieuRong / 2.0f - 250, chieuCao - 55, 100, 40,
-                    "SUFFE", { 52, 152, 219, 255 }, { 255, 255, 255, 255 });
+    nutTron.khoiTao(chieuRong / 2.0f - 250, chieuCao - 55, 115, 40,
+                    "SHUFFLE", { 52, 152, 219, 255 }, { 255, 255, 255, 255 });
     nutGoiY.khoiTao(chieuRong / 2.0f + 150, chieuCao - 55, 100, 40,
                     "HINT", { 155, 89, 182, 255 }, { 255, 255, 255, 255 });
 }
@@ -23,8 +23,8 @@ void HUD::veLen(SDL_Renderer* ve, TTF_Font* font, int level, int xu, const std::
     TextureManager::veChu(ve, font, chuXu, chieuRong - 80.0f, 22, mauVang, true);
 
     if (!tuHienTai.empty()) {
-        SDL_Color mauXanh = { 100, 200, 255, 255 };
-        TextureManager::veChu(ve, font, tuHienTai, chieuRong / 2.0f, chieuCao / 2.0f + 10, mauXanh, true);
+        SDL_Color mauXanh = { 100, 220, 255, 255 };
+        TextureManager::veChu(ve, font, tuHienTai, chieuRong / 2.0f, chieuCao - 115.0f, mauXanh, true);
     }
 
     nutTron.veLen(ve, font);

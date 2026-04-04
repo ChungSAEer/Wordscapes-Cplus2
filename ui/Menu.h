@@ -2,6 +2,11 @@
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_ttf.h>
 #include "Button.h"
+#include <vector>
+
+struct MenuStar {
+    float x, y, r, speed, alpha;
+};
 
 class Menu {
 public:
@@ -15,4 +20,5 @@ private:
     int chieuRong, chieuCao;
     float bienDoNhay;
     float thoiGianDemo;
+    std::vector<MenuStar> cacSao;
 };

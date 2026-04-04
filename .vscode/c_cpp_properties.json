@@ -4,9 +4,9 @@
       "name": "Windows",
       "includePath": [
         "${workspaceFolder}/**",
-        "C:/SDL3/include"
+        "C:/SDL_LIBRARIES/include"
       ],
-      "compilerPath": "C:/MinGW/bin/g++.exe",
+      "compilerPath": "C:/Program Files/CodeBlocks/MinGW/bin/g++.exe",
       "cppStandard": "c++17",
       "intelliSenseMode": "windows-gcc-x64"
     }

@@ -93,9 +93,19 @@ int Grid::laySoCot() { return soCot; }
 void Grid::loMotChu(const std::string& tu, std::vector<ViTriTu>& viTriCacTu) {
     for (auto& vt : viTriCacTu) {
         if (vt.tu == tu && !vt.daTim) {
-            int d = vt.dong;
-            int c = vt.cot;
-            if (d >= 0 && d < soDong && c >= 0 && c < soCot) {
+            // Thu thập các ô chưa lộ của từ này
+            std::vector<std::pair<int,int>> chuaCuaLo;
+            for (int i = 0; i < (int)vt.tu.size(); i++) {
+                int d = vt.dong + (vt.ngang ? 0 : i);
+                int c = vt.cot + (vt.ngang ? i : 0);
+                if (d >= 0 && d < soDong && c >= 0 && c < soCot && !mangO[d][c].daLo) {
+                    chuaCuaLo.push_back({d, c});
+                }
+            }
+            // Lộ ngẫu nhiên 1 chữ cái chưa lộ
+            if (!chuaCuaLo.empty()) {
+                int idx = rand() % chuaCuaLo.size();
+                auto [d, c] = chuaCuaLo[idx];
                 mangO[d][c].daLo = true;
                 mangO[d][c].hieuUng = 1.0f;
             }
