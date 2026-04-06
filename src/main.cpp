@@ -9,5 +9,5 @@ int main(int argc, char* argv[]) {
 
     troChoi.chay();
 
-    return 2;
+    return 10;
 }
