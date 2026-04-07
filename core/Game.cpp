@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "TextureManager.h"
+#include <SDL3_image/SDL_image.h>
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
@@ -26,10 +27,10 @@ Game::~Game() {
 
 bool Game::khoiDong(const std::string& tieuDe, int chieuRong, int chieuCao) {
     srand((unsigned)time(nullptr));
-    chieuRongCuaSo = chieuRong;
+    chieuRongCuaSo = chieuRong;     
     chieuCaoCuaSo = chieuCao;
 
-    if (!SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS)) {
+    if (!SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS | SDL_INIT_AUDIO)) {
         std::cerr << "SDL loi: " << SDL_GetError() << "\n";
         return false;
     }
@@ -47,21 +48,31 @@ bool Game::khoiDong(const std::string& tieuDe, int chieuRong, int chieuCao) {
 
     SDL_SetRenderDrawBlendMode(boVe, SDL_BLENDMODE_BLEND);
 
-    fontChu = TTF_OpenFont("assets/fonts/font.ttf", 24);
+    fontChu = TTF_OpenFont("assets/font_game.ttf", 24);
     if (!fontChu) fontChu = TTF_OpenFont("C:/Windows/Fonts/arial.ttf", 24);
 
-    fontLon = TTF_OpenFont("assets/fonts/font.ttf", 48);
+    fontLon = TTF_OpenFont("assets/font_game.ttf", 48);
     if (!fontLon) fontLon = TTF_OpenFont("C:/Windows/Fonts/arial.ttf", 48);
 
-    fontNho = TTF_OpenFont("assets/fonts/font.ttf", 18);
+    fontNho = TTF_OpenFont("assets/font_game.ttf", 18);
     if (!fontNho) fontNho = TTF_OpenFont("C:/Windows/Fonts/arial.ttf", 18);
 
-    boDocLevel.docDuLieu();
-    menuChinh.khoiTao(chieuRong, chieuCao);
-    thanhThongTin.khoiTao(chieuRong, chieuCao);
+    if (SDL_LoadWAV("assets/audio_bg_music.wav", &thongSoNhac, &duLieuNhac, &chieuDaiNhac)) {
+        luongAmThanh = SDL_OpenAudioDeviceStream(SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK, &thongSoNhac, nullptr, nullptr);
+        if (luongAmThanh) {
+            SDL_PutAudioStreamData(luongAmThanh, duLieuNhac, (int)chieuDaiNhac);
+            SDL_ResumeAudioStreamDevice(luongAmThanh);
+        }
+    } else {
+        SDL_Log("Khong tai duoc nhac: %s", SDL_GetError());
+    }
 
-    nutTiepTheo.khoiTao(chieuRong / 2.0f - 80, chieuCao / 2.0f + 60, 160, 50,
-                        "NEXT LEVEL", { 46, 204, 113, 255 }, { 255, 255, 255, 255 });
+    boDocLevel.docDuLieu();
+    menuChinh.khoiTao(chieuRong, chieuCao, boVe);
+    thanhThongTin.khoiTao(chieuRong, chieuCao, boVe);
+
+    texNutTiepTheo = IMG_LoadTexture(boVe, "assets/button_start.png");
+    nutTiepTheo.khoiTao(chieuRong / 2.0f - 80, chieuCao / 2.0f + 60, 160, 50, texNutTiepTheo);
 
     dangChay = true;
     trangThai = TRANG_THAI_MENU;
@@ -93,7 +104,7 @@ void Game::batDauLevel(int soLevel) {
     vongChuCai.khoiTao(thongTin.cacChuCai, tamVongX, tamVongY, banKinh);
 
     trangThai = TRANG_THAI_CHOI;
-    thongBao = "Xin chao";
+    thongBao = "WELCOME!";
     thoiGianThongBao = 0;
 }
 
@@ -102,7 +113,7 @@ void Game::kiemTraTu() {
     if (tuTao.empty()) return;
 
     if (kiemTraTuObj.daTuNayRoi(tuTao)) {
-        thongBao = "Chu nay da tim roi!";
+        thongBao = "THIS WORD IS ALREADY FOUND!";
         thoiGianThongBao = 1.5f;
     } else if (kiemTraTuObj.laDapAnDung(tuTao)) {
         kiemTraTuObj.danhDauDaTim(tuTao);
@@ -112,7 +123,7 @@ void Game::kiemTraTu() {
         bangOChu.dienTuVao(tuTao, tt.viTriCacTu);
 
         soXu += 10;
-        thongBao = "+" + std::to_string(10) + " xu!";
+        thongBao = "+" + std::to_string(10) + " COINS!";
         thoiGianThongBao = 1.5f;
 
         if (levelData.daHoanThanh()) {
@@ -121,7 +132,7 @@ void Game::kiemTraTu() {
         }
     } else {
         if (tuTao.size() >= 2) {
-            thongBao = "Sai roi!";
+            thongBao = "INCORRECT!";
             thoiGianThongBao = 1.0f;
         }
     }
@@ -164,8 +175,11 @@ void Game::xuLySuKien() {
 }
 
 void Game::capNhat() {
+    if (luongAmThanh && SDL_GetAudioStreamAvailable(luongAmThanh) < 10000) {
+        SDL_PutAudioStreamData(luongAmThanh, duLieuNhac, (int)chieuDaiNhac);
+    }
+    
     ConChuot chuot = boXuLyInput.layChuot();
-
     if (thoiGianThongBao > 0)
         thoiGianThongBao -= 0.016f;
 
@@ -195,11 +209,11 @@ void Game::capNhat() {
                         soXu -= 20;
                         ThongTinLevel tt = levelData.layThongTin();
                         bangOChu.loMotChu(tuGoiY, tt.viTriCacTu);
-                        thongBao = "Hint : -20 coins!";
+                        thongBao = "HINT: - 20 COINS!";
                         thoiGianThongBao = 1.5f;
                     }
                 } else {
-                    thongBao = "Out of coins!";
+                    thongBao = "NOT ENOUGH COINS!";
                     thoiGianThongBao = 1.5f;
                 }
             }
@@ -268,7 +282,7 @@ void Game::hienThi() {
             chieuRongCuaSo / 2.0f, chieuCaoCuaSo / 2.0f - 40, mauVang, true);
 
         SDL_Color mauTrang = { 200, 200, 200, 255 };
-        std::string chuBonus = "+50 bonus coins!";
+        std::string chuBonus = "+50 BONUS COINS!";
         TextureManager::veChu(boVe, fontChu, chuBonus,
             chieuRongCuaSo / 2.0f, chieuCaoCuaSo / 2.0f + 20, mauTrang, true);
 
@@ -279,6 +293,14 @@ void Game::hienThi() {
 }
 
 void Game::donDep() {
+    // Xóa nhạc nền
+    if (luongAmThanh) SDL_DestroyAudioStream(luongAmThanh);
+    if (duLieuNhac) SDL_free(duLieuNhac);
+    if (texNutTiepTheo != nullptr) {
+        SDL_DestroyTexture(texNutTiepTheo);
+        texNutTiepTheo = nullptr;
+    }
+
     if (fontNho) { TTF_CloseFont(fontNho); fontNho = nullptr; }
     if (fontChu) { TTF_CloseFont(fontChu); fontChu = nullptr; }
     if (fontLon) { TTF_CloseFont(fontLon); fontLon = nullptr; }

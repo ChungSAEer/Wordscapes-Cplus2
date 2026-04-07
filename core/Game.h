@@ -40,6 +40,7 @@ private:
     TTF_Font* fontChu;
     TTF_Font* fontLon;
     TTF_Font* fontNho;
+    SDL_Texture* texNutTiepTheo = nullptr;
 
     bool dangChay;
     TrangThaiGame trangThai;
@@ -63,4 +64,8 @@ private:
     float thoiGianThongBao;
 
     Button nutTiepTheo;
+    SDL_AudioSpec thongSoNhac;
+    Uint8* duLieuNhac = nullptr;
+    Uint32 chieuDaiNhac = 0;
+    SDL_AudioStream* luongAmThanh = nullptr;
 };

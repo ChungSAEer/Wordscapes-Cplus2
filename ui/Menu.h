@@ -10,15 +10,22 @@ struct MenuStar {
 
 class Menu {
 public:
-    void khoiTao(int chieuRong, int chieuCao);
+    void khoiTao(int _chieuRong, int _chieuCao, SDL_Renderer* ve);
     int veVaXuLy(SDL_Renderer* ve, TTF_Font* fontLon, TTF_Font* fontNho,
                  float chuotX, float chuotY, bool nhanChuot);
+
+    void donDep();
 
 private:
     Button nutChoi;
     Button nutThoat;
+    
     int chieuRong, chieuCao;
     float bienDoNhay;
     float thoiGianDemo;
     std::vector<MenuStar> cacSao;
+
+    // Biến lưu ảnh
+    SDL_Texture* texNutStart = nullptr;
+    SDL_Texture* texNutExit = nullptr;
 };
