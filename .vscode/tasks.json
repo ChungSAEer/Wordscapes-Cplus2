@@ -1,40 +1,16 @@
 {
-  "version": "2.0.0",
-  "tasks": [
-    {
-      "type": "shell",
-      "label": "Build Wordscapes",
-      "command": "C:\\Program Files\\CodeBlocks\\MinGW\\bin\\g++.exe",
-      "args": [
-        "-fdiagnostics-color=always",
-        "-g",
-        "-std=c++17",
-        "src/main.cpp",
-        "core/Game.cpp",
-        "core/Input.cpp",
-        "core/TextureManager.cpp",
-        "puzzle/Grid.cpp",
-        "puzzle/LetterWheel.cpp",
-        "puzzle/Level.cpp",
-        "puzzle/WordValidator.cpp",
-        "ui/Button.cpp",
-        "ui/Menu.cpp",
-        "ui/HUD.cpp",
-        "data/LevelLoader.cpp",
-        "-o", "game.exe",
-        "-IC:/SDL_LIBRARIES/include",
-        "-LC:/SDL_LIBRARIES/lib",
-        "-lSDL3",
-        "-lSDL3_ttf"
-      ],
-      "options": {
-        "cwd": "${workspaceFolder}",
-        "env": {
-          "PATH": "C:\\Program Files\\CodeBlocks\\MinGW\\bin;${env:PATH}"
-        }
-      },
-      "problemMatcher": ["$gcc"],
-      "group": { "kind": "build", "isDefault": true }
-    }
-  ]
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "cmake",
+			"label": "CMake: build",
+			"command": "build",
+			"targets": [
+				"[N/A - Select Kit]"
+			],
+			"group": "build",
+			"problemMatcher": [],
+			"detail": "CMake template build task"
+		}
+	]
 }
