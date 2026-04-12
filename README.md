@@ -80,7 +80,6 @@ Tạo nền tảng engine để game có thể chạy.
 
 
 * Setup project C++ + SDL3
-* Setup project C++ + SDL2
 * Cài SDL_image và SDL_ttf
 * Tạo cửa sổ game
 * Tạo renderer
