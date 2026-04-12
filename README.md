@@ -1,4 +1,4 @@
-# Wordscapes Clone (SDL2 + C++) – Roadmap Phát Triển
+# Wordscapes Clone (SDL3 + C++) – Roadmap Phát Triển
 
 ## Tổng quan dự án
 
@@ -6,7 +6,7 @@
 
 **Số lượng thành viên:** 3 người
 **Thời gian dự kiến:** 4–6 tuần
-**Mục tiêu:** Tạo một game chơi được với khoảng **50 level**.
+**Mục tiêu:** Tạo một game chơi được với khoảng **20 level**.
 
 ---
 
