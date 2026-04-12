@@ -77,7 +77,7 @@ Tạo nền tảng engine để game có thể chạy.
 
 ### Task
 
-* Setup project C++ + SDL2
+* Setup project C++ + SDL3
 * Cài SDL_image và SDL_ttf
 * Tạo cửa sổ game
 * Tạo renderer
@@ -342,7 +342,7 @@ dùng hint → -coin
 Tạo khoảng:
 
 ```
-50 level
+20 level
 ```
 
 ---
@@ -401,5 +401,5 @@ Game hoàn chỉnh có:
 Thời gian chơi:
 
 ```
-30 – 60 phút
+Khoảng 30 phút
 ```
