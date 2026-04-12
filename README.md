@@ -1,9 +1,6 @@
 
 # Wordscapes Clone (SDL3 + C++) – Roadmap Phát Triển
 
-# Wordscapes Clone (SDL2 + C++) – Roadmap Phát Triển
-
-
 ## Tổng quan dự án
 
 Đây là dự án phát triển một **game giải đố dạng Wordscapes** bằng **C++ và thư viện SDL3**. Người chơi nối các chữ cái để tạo thành từ và điền vào **bảng ô chữ (crossword grid)**.
