@@ -1,16 +1,18 @@
 {
-	"version": "2.0.0",
-	"tasks": [
-		{
-			"type": "cmake",
-			"label": "CMake: build",
-			"command": "build",
-			"targets": [
-				"[N/A - Select Kit]"
-			],
-			"group": "build",
-			"problemMatcher": [],
-			"detail": "CMake template build task"
-		}
-	]
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build Wordscapes",
+      "type": "shell",
+      "command": ".\\build.bat",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": [
+        "$gcc"
+      ],
+      "detail": "Runs the local build.bat script to compile the game using MinGW."
+    }
+  ]
 }

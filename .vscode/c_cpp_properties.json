@@ -4,11 +4,18 @@
       "name": "Windows",
       "includePath": [
         "${workspaceFolder}/**",
-        "C:/SDL_LIBRARIES/include"
+        "C:/msys64/ucrt64/include"
       ],
-      "compilerPath": "C:/Program Files/CodeBlocks/MinGW/bin/g++.exe",
+      "compilerPath": "C:/msys64/ucrt64/bin/g++.exe",
       "cppStandard": "c++17",
-      "intelliSenseMode": "windows-gcc-x64"
+      "intelliSenseMode": "windows-gcc-x64",
+      "browse": {
+        "path": [
+          "${workspaceFolder}",
+          "C:/msys64/ucrt64/include"
+        ],
+        "limitSymbolsToIncludedHeaders": true
+      }
     }
   ],
   "version": 4

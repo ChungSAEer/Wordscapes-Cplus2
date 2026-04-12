@@ -74,10 +74,16 @@ bool Game::khoiDong(const std::string& tieuDe, int chieuRong, int chieuCao) {
     texNutTiepTheo = IMG_LoadTexture(boVe, "assets/button_start.png");
     nutTiepTheo.khoiTao(chieuRong / 2.0f - 80, chieuCao / 2.0f + 60, 160, 50, texNutTiepTheo);
 
+    anhNenChung = IMG_LoadTexture(boVe, "assets/bg.png"); // Nhớ check kỹ tên file là bg.png hay bg_chung.png nhé!
+    if (!anhNenChung) {
+        SDL_Log("Loi tai anh nen: %s", SDL_GetError());
+    }
+
     dangChay = true;
     trangThai = TRANG_THAI_MENU;
     return true;
 }
+
 
 void Game::batDauLevel(int soLevel) {
     if (soLevel >= boDocLevel.tongSoLevel()) {
@@ -234,10 +240,15 @@ void Game::hienThi() {
     SDL_SetRenderDrawColor(boVe, 15, 15, 40, 255);
     SDL_RenderClear(boVe);
 
-    SDL_SetRenderDrawColor(boVe, 20, 20, 55, 100);
-    for (int i = 0; i < chieuCaoCuaSo; i += 4) {
-        SDL_FRect vach = { 0, (float)i, (float)chieuRongCuaSo, 2.0f };
-        SDL_RenderFillRect(boVe, &vach);
+    if (trangThai == TRANG_THAI_CHOI && anhNenChung != nullptr) {
+        SDL_FRect bgRect = { 0, 0, (float)chieuRongCuaSo, (float)chieuCaoCuaSo };
+        SDL_RenderTexture(boVe, anhNenChung, nullptr, &bgRect);
+    } else {
+        SDL_SetRenderDrawColor(boVe, 20, 20, 55, 100);
+        for (int i = 0; i < chieuCaoCuaSo; i += 4) {
+            SDL_FRect vach = { 0, (float)i, (float)chieuRongCuaSo, 2.0f };
+            SDL_RenderFillRect(boVe, &vach);
+        }
     }
 
     if (trangThai == TRANG_THAI_MENU) {
@@ -299,6 +310,11 @@ void Game::donDep() {
     if (texNutTiepTheo != nullptr) {
         SDL_DestroyTexture(texNutTiepTheo);
         texNutTiepTheo = nullptr;
+    }
+
+    if (anhNenChung != nullptr) {
+        SDL_DestroyTexture(anhNenChung);
+        anhNenChung = nullptr;
     }
 
     if (fontNho) { TTF_CloseFont(fontNho); fontNho = nullptr; }

@@ -1,6 +1,6 @@
 #pragma once
 #include <SDL3/SDL.h>
-#include <SDL3/SDL_ttf.h>
+#include <SDL3_ttf/SDL_ttf.h>
 #include <string>
 
 #include "../data/LevelLoader.h"
@@ -41,6 +41,7 @@ private:
     TTF_Font* fontLon;
     TTF_Font* fontNho;
     SDL_Texture* texNutTiepTheo = nullptr;
+    SDL_Texture* anhNenChung = nullptr;
 
     bool dangChay;
     TrangThaiGame trangThai;

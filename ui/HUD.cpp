@@ -19,10 +19,10 @@ void HUD::veLen(SDL_Renderer* ve, TTF_Font* font, int level, int xu, const std::
     SDL_Color mauVang = { 255, 215, 0, 255 };
 
     std::string chuLevel = "Level " + std::to_string(level);
-    TextureManager::veChu(ve, font, chuLevel, 100, 52, mauTrang, true);
+    TextureManager::veChu(ve, font, chuLevel, 70, 22, mauTrang, true);
 
     std::string chuXu = "Coins: " + std::to_string(xu);
-    TextureManager::veChu(ve, font, chuXu, chieuRong - 100.0f, 52, mauVang, true);
+    TextureManager::veChu(ve, font, chuXu, chieuRong - 80.0f, 22, mauVang, true);
 
     if (!tuHienTai.empty()) {
         SDL_Color mauXanh = { 100, 220, 255, 255 };
