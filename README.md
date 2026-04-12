@@ -1,8 +1,8 @@
-<<<<<<< HEAD
+
 # Wordscapes Clone (SDL3 + C++) – Roadmap Phát Triển
-=======
+
 # Wordscapes Clone (SDL2 + C++) – Roadmap Phát Triển
->>>>>>> 5726806 (Sửa hoàn chỉnh rồi nhé)
+
 
 ## Tổng quan dự án
 
@@ -10,12 +10,8 @@
 
 **Số lượng thành viên:** 3 người
 **Thời gian dự kiến:** 4–6 tuần
-<<<<<<< HEAD
-**Mục tiêu:** Tạo một game chơi được với khoảng **20 level**.
-=======
-**Mục tiêu:** Tạo một game chơi được với khoảng **50 level**.
->>>>>>> 5726806 (Sửa hoàn chỉnh rồi nhé)
 
+**Mục tiêu:** Tạo một game chơi được với khoảng **20 level**.
 ---
 
 # Tính năng của game
@@ -85,11 +81,9 @@ Tạo nền tảng engine để game có thể chạy.
 
 ### Task
 
-<<<<<<< HEAD
+
 * Setup project C++ + SDL3
-=======
 * Setup project C++ + SDL2
->>>>>>> 5726806 (Sửa hoàn chỉnh rồi nhé)
 * Cài SDL_image và SDL_ttf
 * Tạo cửa sổ game
 * Tạo renderer
@@ -354,13 +348,8 @@ dùng hint → -coin
 Tạo khoảng:
 
 ```
-<<<<<<< HEAD
 20 level
 =======
-50 level
->>>>>>> 5726806 (Sửa hoàn chỉnh rồi nhé)
-```
-
 ---
 
 # Phân chia công việc
@@ -417,9 +406,5 @@ Game hoàn chỉnh có:
 Thời gian chơi:
 
 ```
-<<<<<<< HEAD
 Khoảng 30 phút
 =======
-30 – 60 phút
->>>>>>> 5726806 (Sửa hoàn chỉnh rồi nhé)
-```
