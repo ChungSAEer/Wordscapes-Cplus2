@@ -74,7 +74,7 @@ bool Game::khoiDong(const std::string& tieuDe, int chieuRong, int chieuCao) {
     texNutTiepTheo = IMG_LoadTexture(boVe, "assets/button_start.png");
     nutTiepTheo.khoiTao(chieuRong / 2.0f - 80, chieuCao / 2.0f + 60, 160, 50, texNutTiepTheo);
 
-    anhNenChung = IMG_LoadTexture(boVe, "assets/bg.png"); // Nhớ check kỹ tên file là bg.png hay bg_chung.png nhé!
+    anhNenChung = IMG_LoadTexture(boVe, "assets/bg.png"); 
     if (!anhNenChung) {
         SDL_Log("Loi tai anh nen: %s", SDL_GetError());
     }
