@@ -401,8 +401,8 @@ Game hoàn chỉnh có:
 * shuffle
 * âm thanh
 
-Thời gian chơi:
+Thời gian chơi: 30 phút
 
 ```
-Khoảng 30 phút
+Authored by Strong Zero-Game(Trọng Chung - Ngọc Bảo - Nhật Anh)
 =======
