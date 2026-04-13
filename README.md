@@ -350,6 +350,7 @@ Tạo khoảng:
 
 # Phân chia công việc
 
+---
 ## Dev 1 – Engine
 
 * **Setup Project & SDL3**: Khởi tạo project C++, cấu hình link thư viện SDL3 cơ bản, SDL_image, SDL_ttf và môi trường phát triển (tại `src/main.cpp`).
@@ -375,6 +376,7 @@ Tạo khoảng:
 ---
 
 # Timeline
+---
 
 | Tuần   | Tiến độ        |
 | ------ | -------------- |
@@ -392,15 +394,15 @@ Tạo khoảng:
 Game hoàn chỉnh có:
 
 * menu
-* 50 level
+* 20 level
 * nối chữ tạo từ
 * bảng ô chữ
 * hint
 * shuffle
 * âm thanh
 
-Thời gian chơi:
+Thời gian chơi: 30 phút
 
 ```
-Khoảng 30 phút
+Authored by Strong Zero-Game(Trọng Chung - Ngọc Bảo - Nhật Anh)
 =======
