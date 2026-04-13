@@ -1,3 +1,4 @@
+//tao ra man hinh menu chinh, co hieu ung sao bay, nut choi va thoat
 #include "Menu.h"
 #include "../core/TextureManager.h"
 #include <SDL3_image/SDL_image.h>

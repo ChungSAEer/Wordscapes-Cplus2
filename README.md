@@ -352,11 +352,11 @@ Tạo khoảng:
 
 ## Dev 1 – Engine
 
-* setup SDL
-* game loop
-* renderer
-* input system
-* state machine
+* **Setup Project & SDL3**: Khởi tạo project C++, cấu hình link thư viện SDL3 cơ bản, SDL_image, SDL_ttf và môi trường phát triển (tại `src/main.cpp`).
+* **Game Loop & State Machine**: Xây dựng kiến trúc `Game.cpp`/`Game.h` điều hướng toàn bộ vòng đời ứng dụng (`khoiDong`, `xuLySuKien`, `capNhat`, `hienThi`). Quản lý hệ thống chuyển đổi trạng thái mượt mà (Menu -> Đang chơi -> Hoàn thành level).
+* **Renderer & TextureManager**: Viết helper class `TextureManager` gói gọn các thao tác dựng hình phức tạp của SDL3 để vẽ hình (có bo góc), nạp texture từ file ảnh, hiển thị font chữ TTF đa kích cỡ chuẩn xác.
+* **Input System**: Lập trình module `Input.cpp` thu thập và xử lý sự kiện chuột (di chuyển, ấn, giữ, thả chuột) và phím bấm theo thời gian thực (real-time), tối ưu cho cơ chế kéo thả nối chữ.
+* **Audio Layer**: Tích hợp luồng phát nhạc nền `SDL_AudioStream` kết hợp việc tính toán giới hạn logic `deltaTime` tối ưu khung hình của Game.
 
 ## Dev 2 – Gameplay
 

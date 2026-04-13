@@ -1,6 +1,8 @@
+// ve khoi + ve chu + load file bang sdl image
 #include "TextureManager.h"
 #include <cmath>
 
+// ham nay convert text string thanh be mat anh sau do quang len render canvas
 void TextureManager::veChu(SDL_Renderer* ve, TTF_Font* font, const std::string& chuoi,
                             float x, float y, SDL_Color mau, bool canGiua) {
     if (!font || chuoi.empty()) return;
@@ -26,6 +28,7 @@ void TextureManager::veChu(SDL_Renderer* ve, TTF_Font* font, const std::string& 
     SDL_DestroyTexture(hinh);
 }
 
+// ham nay quet cac diem anh de to mau thanh mot vong tron dac (solid circle) bang thuat toan pytago
 void TextureManager::veHinhTronDoc(SDL_Renderer* ve, float taiX, float taiY,
                                     float banKinh, SDL_Color mau) {
     SDL_SetRenderDrawColor(ve, mau.r, mau.g, mau.b, mau.a);
@@ -39,6 +42,7 @@ void TextureManager::veHinhTronDoc(SDL_Renderer* ve, float taiX, float taiY,
     }
 }
 
+// ham nay chia hinh chu nhat bo goc thanh cac cuc nho (3 cuc chu nhat va bo goc pytago 4 ben) roi dap vo voi nhau
 void TextureManager::veHinhChuNhatBoGoc(SDL_Renderer* ve, float x, float y, float w, float h,
                                          float boGoc, SDL_Color mau) {
     SDL_SetRenderDrawColor(ve, mau.r, mau.g, mau.b, mau.a);
@@ -65,6 +69,7 @@ void TextureManager::veHinhChuNhatBoGoc(SDL_Renderer* ve, float x, float y, floa
     }
 }
 
+// ham nay noi cac diem anh tu a den b sinh ra mot duong thang (quang duong vecto) co do day do minh qui dinh
 void TextureManager::veDuongThang(SDL_Renderer* ve, float x1, float y1, float x2, float y2,
                                    float doDay, SDL_Color mau) {
     SDL_SetRenderDrawColor(ve, mau.r, mau.g, mau.b, mau.a);

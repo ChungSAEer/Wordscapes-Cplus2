@@ -1,3 +1,4 @@
+// ve ra HUD (level, xu, tu hien tai), co nut shuffle va hint
 #include "HUD.h"
 #include "../core/TextureManager.h"
 #include <SDL3_image/SDL_image.h>

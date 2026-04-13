@@ -1,3 +1,4 @@
+// quan ly vong chu, ve vong chu, xu ly chon chu bang chuot, lay tu dang ghep, xoa tu dang ghep, tron chu
 #include "LetterWheel.h"
 #include "../core/TextureManager.h"
 #include <cmath>

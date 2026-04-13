@@ -1,3 +1,4 @@
+// quan ly danh sach dap an, tu da tim, kiem tra tu hop le, danh dau tu da tim, xoa het
 #include "WordValidator.h"
 
 void WordValidator::khoiTao(std::vector<std::string> dapAn) {

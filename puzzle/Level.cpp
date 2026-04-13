@@ -1,3 +1,4 @@
+// dung de quan ly thong tin level, tu da tim, kiem tra tu hop le, kiem tra hoan thanh, goi y
 #include "Level.h"
 #include <algorithm>
 

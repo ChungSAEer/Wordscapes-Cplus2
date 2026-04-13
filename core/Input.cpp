@@ -1,10 +1,13 @@
+// quan ly input, chuot, ban phim, tra ve thong tin chuot
 #include "Input.h"
 
+// ham nay dung de lam moi lai trang thai bam/nha chuot moi khi bat dau render 1 frame (khung hinh) moi
 void Input::resetKhung() {
     chuot.vuaNhan = false;
     chuot.vuaNha = false;
 }
 
+// ham nay nhan event tu sdl roi phan loai xem no la hanh dong gi (di chuyen hay la click)
 void Input::xuLySuKien(SDL_Event& e) {
     if (e.type == SDL_EVENT_MOUSE_MOTION) {
         chuot.viTriX = e.motion.x;
@@ -24,6 +27,7 @@ void Input::xuLySuKien(SDL_Event& e) {
     }
 }
 
+// ham nay tra ve data cua chuot hien tai
 ConChuot Input::layChuot() {
     return chuot;
 }

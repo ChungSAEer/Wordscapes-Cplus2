@@ -1,4 +1,4 @@
-#pragma once
+#pragma once // dung de goi lai file nay nhieu lan ma khong bi loi
 #include <string>
 #include <vector>
 

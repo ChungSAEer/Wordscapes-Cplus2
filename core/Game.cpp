@@ -1,3 +1,5 @@
+// su dung SDL de tao cua so, xu ly su kien
+// ve do hoa, quan ly level, kiem tra tu, quan ly vong chu, menu, HUD, am thanh
 #include "Game.h"
 #include "TextureManager.h"
 #include <SDL3_image/SDL_image.h>
@@ -6,6 +8,7 @@
 #include <ctime>
 #include <algorithm>
 
+// ham khoi tao gan mac dinh cac con tro ve rong va set bien dem mac dinh zero khoi loi rac bo nho
 Game::Game() {
     cuaSo = nullptr;
     boVe = nullptr;
@@ -21,10 +24,12 @@ Game::Game() {
     thoiGianThongBao = 0;
 }
 
+// ham pha huy tu dong duoc goi khi thoat doi tuong de tranh leak ram
 Game::~Game() {
     donDep();
 }
 
+// ham khoi tao he thong: wrap cac ham sdl init, load ttf
 bool Game::khoiDong(const std::string& tieuDe, int chieuRong, int chieuCao) {
     srand((unsigned)time(nullptr));
     chieuRongCuaSo = chieuRong;     
@@ -85,6 +90,7 @@ bool Game::khoiDong(const std::string& tieuDe, int chieuRong, int chieuCao) {
 }
 
 
+// ham ho tro bat dau mot tran dau (level) moi dua theo stt
 void Game::batDauLevel(int soLevel) {
     if (soLevel >= boDocLevel.tongSoLevel()) {
         trangThai = TRANG_THAI_MENU;
@@ -103,8 +109,8 @@ void Game::batDauLevel(int soLevel) {
     bangOChu.khoiTao(thongTin.soDong, thongTin.soCot, thongTin.viTriCacTu);
 
     float tamVongX = chieuRongCuaSo / 2.0f;
-    float tamVongY = chieuCaoCuaSo - 160.0f;
-    float banKinh = 80.0f;
+    float tamVongY = chieuCaoCuaSo - 160.0f; // cach day 1 khoang 160px
+    float banKinh = 80.0f; // ban kinh hinh tron
     if (thongTin.cacChuCai.size() >= 4) banKinh = 90.0f;
 
     vongChuCai.khoiTao(thongTin.cacChuCai, tamVongX, tamVongY, banKinh);
@@ -114,6 +120,7 @@ void Game::batDauLevel(int soLevel) {
     thoiGianThongBao = 0;
 }
 
+// ham xu ly logic mang hinh vong chu: lay chuoi ghep -> doi chieu dap an -> bao dung/sai
 void Game::kiemTraTu() {
     std::string tuTao = vongChuCai.layTuDangGhep();
     if (tuTao.empty()) return;
@@ -128,13 +135,13 @@ void Game::kiemTraTu() {
         ThongTinLevel tt = levelData.layThongTin();
         bangOChu.dienTuVao(tuTao, tt.viTriCacTu);
 
-        soXu += 10;
+        soXu += 10; // dung tu hop le thi cong 10
         thongBao = "+" + std::to_string(10) + " COINS!";
         thoiGianThongBao = 1.5f;
 
         if (levelData.daHoanThanh()) {
             trangThai = TRANG_THAI_THANG;
-            soXu += 50;
+            soXu += 50; // win thi cong 50
         }
     } else {
         if (tuTao.size() >= 2) {
@@ -145,6 +152,7 @@ void Game::kiemTraTu() {
     vongChuCai.xoaTuDangGhep();
 }
 
+// ham chay chinh la con tim cua tro choi: no chua vong lap white (game loop) gioi han thoi gian xu ly cac buoc input -> update -> render
 void Game::chay() {
     Uint64 thoiGianTruoc = SDL_GetTicks();
 
@@ -163,6 +171,7 @@ void Game::chay() {
     }
 }
 
+// ham tich luy va doc cac bien phan cung kieu nguyen thuy tu sdl3 event queue
 void Game::xuLySuKien() {
     SDL_Event suKien;
     while (SDL_PollEvent(&suKien)) {
@@ -180,6 +189,7 @@ void Game::xuLySuKien() {
     }
 }
 
+// ham thay doi bien he thong tuy theo nut bam, cung la noi tich hop may trang thai (state machine)
 void Game::capNhat() {
     if (luongAmThanh && SDL_GetAudioStreamAvailable(luongAmThanh) < 10000) {
         SDL_PutAudioStreamData(luongAmThanh, duLieuNhac, (int)chieuDaiNhac);
@@ -212,7 +222,7 @@ void Game::capNhat() {
                 if (soXu >= 20) {
                     std::string tuGoiY = levelData.goiY();
                     if (!tuGoiY.empty()) {
-                        soXu -= 20;
+                        soXu -= 20; // dung hint thi bi tru 20
                         ThongTinLevel tt = levelData.layThongTin();
                         bangOChu.loMotChu(tuGoiY, tt.viTriCacTu);
                         thongBao = "HINT: - 20 COINS!";
@@ -236,6 +246,7 @@ void Game::capNhat() {
     }
 }
 
+// ham pha huy hinh anh khung hinh cu va the hien mot khung hinh moi phu thuoc vao viec state dang o dau (menu hay trong game)
 void Game::hienThi() {
     SDL_SetRenderDrawColor(boVe, 15, 15, 40, 255);
     SDL_RenderClear(boVe);
@@ -260,8 +271,8 @@ void Game::hienThi() {
     if (trangThai == TRANG_THAI_CHOI) {
         int soDong = bangOChu.laySoDong();
         int soCot = bangOChu.laySoCot();
-        float kichThuocO = 45.0f;
-        float khoangCach = 2.0f;
+        float kichThuocO = 45.0f; // kich thuoc o chu
+        float khoangCach = 2.0f; // khoang cach giua cac o
         float tongRong = soCot * (kichThuocO + khoangCach);
         float tongCao = soDong * (kichThuocO + khoangCach);
         float batDauX = (chieuRongCuaSo - tongRong) / 2.0f;
@@ -303,6 +314,7 @@ void Game::hienThi() {
     SDL_RenderPresent(boVe);
 }
 
+// ham giai phong vram / ram ma sdl cap phat truoc khi tat window de khong lam trao bo nho he dieu hanh
 void Game::donDep() {
     if (luongAmThanh) SDL_DestroyAudioStream(luongAmThanh);
     if (duLieuNhac) SDL_free(duLieuNhac);
