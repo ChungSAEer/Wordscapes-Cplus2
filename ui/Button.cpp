@@ -19,18 +19,16 @@ void Button::khoiTao(float x, float y, float w, float h, SDL_Texture* texture) {
 
 void Button::veLen(SDL_Renderer* ve, TTF_Font* font) {
     if (anhNen != nullptr) {
-        // --- NẾU LÀ NÚT ẢNH ---
         SDL_FRect rect = { viTriX, viTriY, chieuRong, chieuCao };
         if (hover) {
-            SDL_SetTextureColorMod(anhNen, 255, 255, 255); // Sáng trưng
+            SDL_SetTextureColorMod(anhNen, 255, 255, 255); 
         } else {
-            SDL_SetTextureColorMod(anhNen, 200, 200, 200); // Tối đi một tí
+            SDL_SetTextureColorMod(anhNen, 200, 200, 200); 
         }
         SDL_RenderTexture(ve, anhNen, nullptr, &rect);
-        SDL_SetTextureColorMod(anhNen, 255, 255, 255); // Trả lại màu gốc
+        SDL_SetTextureColorMod(anhNen, 255, 255, 255); 
     } 
     else {
-        // --- NẾU LÀ NÚT CHỮ ---
         SDL_Color mauVe = mauNen;
         if (hover) {
             mauVe.r = (Uint8)std::min(255, mauVe.r + 30);

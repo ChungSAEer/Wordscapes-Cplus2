@@ -5,11 +5,9 @@
 
 class Button {
 public:
-    // Hàm khởi tạo nút chữ
     void khoiTao(float x, float y, float w, float h, const std::string& chuoi,
                  SDL_Color mauNen, SDL_Color mauChu);
                  
-    // Hàm khởi tạo cho nút ảnh
     void khoiTao(float x, float y, float w, float h, SDL_Texture* texture);
 
     void veLen(SDL_Renderer* ve, TTF_Font* font = nullptr);

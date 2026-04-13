@@ -25,7 +25,6 @@ private:
     float thoiGianDemo;
     std::vector<MenuStar> cacSao;
 
-    // Biến lưu ảnh
     SDL_Texture* texNutStart = nullptr;
     SDL_Texture* texNutExit = nullptr;
 };

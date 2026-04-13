@@ -44,11 +44,9 @@ void Menu::khoiTao(int _chieuRong, int _chieuCao, SDL_Renderer* ve) {
 
     float giuaX = chieuRong / 2.0f;
 
-    // Tải ảnh nút
     texNutStart = IMG_LoadTexture(ve, "assets/button_start.png");
     texNutExit  = IMG_LoadTexture(ve, "assets/button_exit.png");
 
-    // Gắn ảnh vào nút
     nutChoi.khoiTao(giuaX - 110, chieuCao / 2.0f + 30,  220, 58, texNutStart);
     nutThoat.khoiTao(giuaX - 110, chieuCao / 2.0f + 108, 220, 58, texNutExit);
 }
@@ -109,7 +107,6 @@ int Menu::veVaXuLy(SDL_Renderer* ve, TTF_Font* fontLon, TTF_Font* fontNho,
     return 0;
 }
 
-// Xóa ảnh khi thoát
 void Menu::donDep() {
     if (texNutStart != nullptr) SDL_DestroyTexture(texNutStart);
     if (texNutExit != nullptr) SDL_DestroyTexture(texNutExit);

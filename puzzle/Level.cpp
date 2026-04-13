@@ -45,13 +45,11 @@ std::vector<std::string> Level::layDapAnChuaTim() {
 std::string Level::goiY() {
     std::vector<std::string> cacTuChuaTim = layDapAnChuaTim();
     if (cacTuChuaTim.empty()) {
-        return ""; // Đã tìm hết, không còn gì để gợi ý
+        return ""; 
     }
 
-    // Chọn ngẫu nhiên 1 từ trong danh sách chưa tìm
     int randomIndex = rand() % cacTuChuaTim.size();
     std::string tuDuocGoiY = cacTuChuaTim[randomIndex];
 
-    // Chỉ trả về từ để Game lộ 1 chữ cái, KHÔNG đánh dấu là đã tìm
     return tuDuocGoiY;
 }

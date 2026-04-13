@@ -304,7 +304,6 @@ void Game::hienThi() {
 }
 
 void Game::donDep() {
-    // Xóa nhạc nền
     if (luongAmThanh) SDL_DestroyAudioStream(luongAmThanh);
     if (duLieuNhac) SDL_free(duLieuNhac);
     if (texNutTiepTheo != nullptr) {
