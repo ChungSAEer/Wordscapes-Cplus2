@@ -33,7 +33,7 @@ void TextureManager::veHinhTronDoc(SDL_Renderer* ve, float taiX, float taiY,
                                     float banKinh, SDL_Color mau) {
     SDL_SetRenderDrawColor(ve, mau.r, mau.g, mau.b, mau.a);
     int r = (int)banKinh;
-    for (int w = -r; w <= r; w++) {
+    for (int w = -r; w <= r; w++) { // thuat toan pytago
         for (int h = -r; h <= r; h++) {
             if (w * w + h * h <= r * r) {
                 SDL_RenderPoint(ve, taiX + w, taiY + h);

@@ -1,4 +1,4 @@
-
+// Quan ly, xu ly va ham ve cho bang chu cai o giua man hinh (Grid)
 #include "Grid.h"
 #include "../core/TextureManager.h"
 
