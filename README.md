@@ -350,6 +350,7 @@ Tạo khoảng:
 
 # Phân chia công việc
 
+---
 ## Dev 1 – Engine
 
 * setup SDL
@@ -375,6 +376,7 @@ Tạo khoảng:
 ---
 
 # Timeline
+---
 
 | Tuần   | Tiến độ        |
 | ------ | -------------- |
@@ -392,7 +394,7 @@ Tạo khoảng:
 Game hoàn chỉnh có:
 
 * menu
-* 50 level
+* 20 level
 * nối chữ tạo từ
 * bảng ô chữ
 * hint
